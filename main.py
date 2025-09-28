@@ -6,11 +6,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, f1_score
 
-mlflow.set_tracking_uri("http://127.0.0.1:5001")
-mlflow.set_experiment("mlops-course")
+#mlflow.set_tracking_uri("http://127.0.0.1:5001")
+#mlflow.set_experiment("mlops-course")
 
 MODEL_NAME = "mlops-course-model"
-
+import dagshub
+dagshub_owner="fatima-zaidan"
+dagshub_repo="mlflow_tracking"
+dagshub.init(repo_owner=dagshub_owner, repo_name=dagshub_repo, mlflow=True)
 # Load Iris dataset
 iris = load_iris()
 X, y = iris.data, iris.target
