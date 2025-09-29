@@ -5,5 +5,5 @@ __pycache__/
 .DS_Store
 mlflow.db
 newenv
+.env
 
-/data
