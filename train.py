@@ -18,7 +18,7 @@ def run_training(
     model_name="mlops-demo-model",
     use_registry=True,
     dagshub_owner=os.getenv("DAGSHUB_OWNER", "fatima-zaidan"),
-    dagshub_repo=os.getenv("DAGSHUB_REPO", "accelerator-tracking-demo"),
+    dagshub_repo=os.getenv("DAGSHUB_REPO", "mlflow_tracking"),
 ):
     # If env MLFLOW_TRACKING_URI isn’t set, init DagsHub automatically
     if mlflow.get_tracking_uri().startswith("file:") and dagshub:
