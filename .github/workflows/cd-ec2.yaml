@@ -30,4 +30,30 @@ jobs:
         push: true
         tags: ${{ env.IMAGE }}
 
-    
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          set -e
+          IMAGE="${{ env.IMAGE }}"
+          NAME="${{ env.NAME }}"
+          PORT="${{ env.PORT }}"
+
+          # always pull the latest image
+          docker pull "$IMAGE"
+
+          # stop & remove existing container with the same name (if any)
+          if [ "$(docker ps -aq -f name=^/${NAME}$)" ]; then
+            docker rm -f "$NAME" || true
+          fi
+
+          # run fresh container
+          docker run -d \
+            --name "$NAME" \
+            --restart unless-stopped \
+            -p ${PORT}:${PORT} \
+            "$IMAGE"
+          
